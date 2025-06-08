@@ -14,7 +14,6 @@ window.addEventListener('load', async () => {
   const body = silk(document.getElementsByTagName('body')[0])
   let addMessage = null
   setInterval(async () => {
-    debugger
     const response = await fetch('http://localhost:3000/broadcast')
     const data = await response.json()
     console.log(data)
@@ -22,7 +21,10 @@ window.addEventListener('load', async () => {
   body.addChild(
     silk('div', {},
       silk('h1', {}, 'Isla Calavera'),
-      silk('ul', {}, add => addMessage = add)
+      silk('ul', {}, add => addMessage = add),
+      silk('div', {},
+        silk('input', { onKeydown: console.log })
+      ),
     )
   )
 });
