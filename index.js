@@ -6,7 +6,7 @@ const postMessage = async (message) => {
     },
     body: JSON.stringify({ message })
   })
-  console.log('Added player', await responseAddPlayer.json())
+  console.log('Add message', message, await responseAddPlayer.json())
 }
 
 const addPlayer = async () => {
@@ -17,7 +17,7 @@ const addPlayer = async () => {
     },
     body: JSON.stringify({ name: 'carlos', avatar: 'yes' })
   })
-  console.log('Added player', await responseAddPlayer.json())
+  console.log('Add player', await responseAddPlayer.json())
 }
 
 window.addEventListener('load', () => {
@@ -26,6 +26,14 @@ window.addEventListener('load', () => {
   setInterval(async () => {
     const response = await fetch('http://localhost:3000/broadcast')
     const data = await response.json()
+    data.messages.forEach(({ author, message }) => {
+      addMessage?.(
+        silk('li', {},
+          silk('strong', {}, author),
+          silk('span', {}, message),
+        )
+      )
+    })
     console.log(data)
   }, 1000)
   const body = silk(document.getElementsByTagName('body')[0])
